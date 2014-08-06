@@ -1,0 +1,9 @@
+<div class="header" ng-controller="NavbarCtrl">
+	<ul class="nav nav-pills pull-right">
+		<li ng-cloak ng-show="loggedIn()"><a href="/home" class="inherit">Home</a></li>
+		<li ng-cloak ng-show="loggedIn()"><a href="#" ng-click="logout()" class="inherit">Logout</a></li>
+		<li ng-cloak ng-hide="loggedIn()"><a href="/login" class="inherit">Login</a></li>
+		<!-- <li ng-cloak ng-hide="loggedIn()"><a href="/signup">Signup</a></li> -->
+	</ul>
+	<h3 class="text-muted"><a href="/" style="color:inherit; text-decoration:none"><img src="/images/logo.png" /></a></h3>
+</div>

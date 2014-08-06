@@ -1,0 +1,101 @@
+<div ng-include="'partials/navbar'"></div>
+
+<h3>{{ currentUser.get("firstName") }} {{ currentUser.get("lastName") }}</h3>
+<p>{{currentUser.get("email")}}</p>
+<p>{{currentUser.get("phone")}}</p>
+
+<br/>
+
+<div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Payment Cards</div>
+
+	<!-- Table -->
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Card Number</th>
+				<th>Expires</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="card in creditCards">
+				<td><img src="{{ card.imageUrl }}" style="height:18px"/></td>
+				<td>Ending in {{ card.last4 }}</td>
+				<td>{{card.expirationDate}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- <a class="pointer" ng-click="open()">Add Card</a>
+<div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
+<p></p> -->
+
+<div class="panel panel-success">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Transaction History</div>
+
+	<!-- Table -->
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="center-text">Date</th>
+				<th class="center-text">Merchant</th>
+				<th class="center-text">Amount</th>
+				<th class="center-text">ProudPay Credit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="transaction in transactions">
+				<td class="center-text">{{ transaction.date }}</td>
+				<td class="center-text">{{ transaction.merchant }}</td>
+				<td class="center-text">${{ transaction.amount }}</td>
+				<td class="center-text">${{ transaction.discount }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title">Add New Card</h3>
+	</div>
+	<div class="modal-body">
+		<form role="form" id="braintree-payment-form" ng-submit="ok(card)">
+			<div class="form-group">
+				<label>Card Number</label>
+				<input type="text" ng-model="card.number" class="form-control" data-encrypted-name="card.number">
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>Exp Month</label>
+						<input type="text" ng-model="card.expMonth" class="form-control" placeholder="MM" data-encrypted-name="card.month">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>Exp Year</label>
+						<input type="text" ng-model="card.expYear" class="form-control" placeholder="YYYY" data-encrypted-name="card.year">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>CVV</label>
+						<input type="text" ng-model="card.cvv" class="form-control" placeholder="Ex. 331" data-encrypted-name="card.cvv">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+				<button type="submit" class="btn btn-success">Add Card</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		var braintree = Braintree.create("MIIBCgKCAQEAxBmRwX0B6YWg3HTsoixU1H3rQneRXr+c5+fGEerZgsO7PQsIQSAIFHFJcAB2WpvCSY6dBNDu/6xi6cgMM/ZI08H+1s3IpMTM5a6IFsve6z2aDJ43aB5SipnAyxpxF5Rh7c6syNMis2L3TXPQpbsnbcNFlORxhcGGAPyDG5Ie7QxjmU5lfnMWlD9l7bqK97MNO8mUjf5Zbu5agsviw9ILPP+JTourl6X4YDK51qXqEBnzn2/2PPfzbCQW1XPgkAqToT3IZgSZWVSLxf4hPlTDlUk73mpK+7yIjxMxYfgOH8ao9OnafbWXtrQWG/H0MCWqKN6MQfC/h7A0C5Er4PvYAQIDAQAB");
+		braintree.onSubmitEncryptForm('braintree-payment-form');
+	</script>
+</script>
